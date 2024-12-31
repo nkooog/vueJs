@@ -5,6 +5,10 @@ import Alerts from "@/components/support/Alerts.vue";
 
 const routes = [
 	{
+		path: '/',
+		redirect: '/dashboard'
+	},
+	{
 		    path : '/dashBoard'
 		,	name : 'DashBoard'
 		,	component : DashBoard

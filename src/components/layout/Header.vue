@@ -3,7 +3,7 @@
   <header id="header" class="header fixed-top d-flex align-items-center">
 
     <div class="d-flex align-items-center justify-content-between">
-      <a href="../../../index.html" class="logo d-flex align-items-center">
+      <a href="/" class="logo d-flex align-items-center">
         <img src="@/assets/img/exona_logo_df.svg" alt="">
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
@@ -204,6 +204,12 @@
 </template>
 
 <script>
+
+document.addEventListener("DOMContentLoaded", () => {
+
+});
+
+
   export default {
     name : '',    // 컴포넌트 이름
     components : {},    // 다른 컴포넌트 사용 시  컴포넌트를 import하고, 배열로 저장

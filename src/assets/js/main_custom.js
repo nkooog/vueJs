@@ -6,9 +6,8 @@
 * License: https://bootstrapmade.com/license/
 */
 
-(function() {
+document.addEventListener('DOMContentLoaded', (event) => {
   "use strict";
-  console.log('load')
   /**
    * Easy selector helper function
    */
@@ -20,7 +19,7 @@
       return document.querySelector(el)
     }
   }
-  console.log(select)
+
   /**
    * Easy event listener function
    */
@@ -316,4 +315,4 @@
     }, 200);
   }
 
-})();
+});

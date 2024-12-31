@@ -228,7 +228,9 @@ import Footer from "@/components/layout/Footer.vue";
   </aside><!-- End Sidebar-->
 
   <!-- router area -->
-  <router-view></router-view>
+  <div style="flex: 1;">
+    <router-view></router-view>
+  </div>
 
   <!-- footer -->
   <Footer></Footer>

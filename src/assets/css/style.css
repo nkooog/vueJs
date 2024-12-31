@@ -1244,3 +1244,10 @@ h6 {
   background-repeat: no-repeat;
   background-position: -674px 0px;
 }
+
+#app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: #81b2d8;
+}

@@ -1,14 +1,15 @@
 <script setup>
 import Header from "@/components/layout/Header.vue";
 import Footer from "@/components/layout/Footer.vue";
+import Alerts from "@/components/support/Alerts.vue";
 
 </script>
 
 <template>
 
-  <Header></Header>
+  <Header v-if="showLayout"></Header>
   <!-- ======= Sidebar ======= -->
-  <aside id="sidebar" class="sidebar">
+  <aside v-if="showLayout" id="sidebar" class="sidebar">
     <ul class="sidebar-nav" id="sidebar-nav">
       <li class="nav-item">
         <router-link class="nav-link" to="/dashBoard">
@@ -233,6 +234,25 @@ import Footer from "@/components/layout/Footer.vue";
   </div>
 
   <!-- footer -->
-  <Footer></Footer>
+  <Footer v-if="showLayout"></Footer>
+
+  <Alerts></Alerts>
+
 </template>
 
+<script>
+export default {
+  name : '',    // 컴포넌트 이름
+  components : {},    // 다른 컴포넌트 사용 시  컴포넌트를 import하고, 배열로 저장
+  data() {            // html과 자바스크립에서 사용할 데이터 변수 선언
+    return {
+      showLayout : ''
+    };
+  },
+  computed : {
+    getLayout() {
+      return this.showLayout = this.route.meta.layout !== 'no-layout';
+    }
+  },
+}
+</script>

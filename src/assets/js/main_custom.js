@@ -6,7 +6,7 @@
 * License: https://bootstrapmade.com/license/
 */
 
-document.addEventListener('DOMContentLoaded', (event) => {
+export function initialize() {
   "use strict";
   /**
    * Easy selector helper function
@@ -315,4 +315,4 @@ document.addEventListener('DOMContentLoaded', (event) => {
     }, 200);
   }
 
-});
+};

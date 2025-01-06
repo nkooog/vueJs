@@ -80,6 +80,8 @@
 
 <script>
 import axios from "axios";
+import {store} from "@/mixins.js";
+
 export default {
   name : '',    // 컴포넌트 이름
   components : {},    // 다른 컴포넌트 사용 시  컴포넌트를 import하고, 배열로 저장
@@ -99,11 +101,23 @@ export default {
       const form = document.querySelector('form');
       const params = this.serializeForm(form);
 
-      console.log(params);
-
       axios.post('/bcs/lgin/LGIN000SEL01', params).then((res) => {
         this.message = res.data.msg;
-        console.log(res.data.msg);
+
+        store.alertVisible = true;
+        store.message = this.message;
+
+        const user = {
+          user : 'test'
+        }
+
+        localStorage.setItem('user', JSON.stringify(user))
+
+        if(res.data.result == 0) {
+          store.showLayout = true;
+          this.$router.push('/dashBoard');
+        }
+
       }).catch((error) => {
         console.log(error);
       });

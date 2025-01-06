@@ -1,17 +1,13 @@
 import axios from "axios";
+import { reactive } from "vue";
+
+export const store = reactive ({
+	showLayout : false,
+	alertVisible: false,
+	message: '',
+});
 
 export default {
-	methods : {
-		async $api(url, method, data) {
-			console.log('axios call');
-			return (await axios({
-				method : method,
-				url,
-				data
-			}).catch(e => {
-				console.log(e)
-			})).data;
-		}
-	}
+	methods : {}
 }
 

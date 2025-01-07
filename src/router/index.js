@@ -1,7 +1,10 @@
 import {createRouter, createWebHistory} from "vue-router";
 
+import {store} from "@/mixins.js";
 import DashBoard from "@/components/dash/DashBoard.vue";
 import Login from "@/components/login/Login.vue";
+import axios from "axios";
+import Accordion from "@/components/sample/Accordion.vue";
 
 const routes = [
 	{
@@ -12,6 +15,12 @@ const routes = [
 		    path : '/dashBoard'
 		,	name : 'DashBoard'
 		,	component : DashBoard
+		,	meta: { requiresAuth: true }
+	},
+	{
+		path : '/accordion'
+		,	name : 'Accordion'
+		,	component : Accordion
 		,	meta: { requiresAuth: true }
 	},
 	{
@@ -27,14 +36,27 @@ const router = createRouter({
 	routes : routes
 });
 
+
 router.beforeEach((to, from, next) => {
-	const isAuthenticated = !!localStorage.getItem('user'); // 예: 로컬 스토리지에 사용자 정보 저장
-	if (to.matched.some(record => record.meta.requiresAuth) && !isAuthenticated) {
-		console.log('ttt');
-		next({ name: 'Login' });
-	} else {
+
+	if (to.name === 'Login') {
+		store.showLayout = false;
 		next();
+		return;
 	}
+
+	axios.post('/bcs/frme/sessionCheck', null).then((res) => {
+		const result = res.data.result;
+		if(result == 0 ) {
+			store.showLayout = false;
+			next({name : 'Login'});
+		}else{
+			store.showLayout = true;
+			next();
+		}
+	}).catch((error) => {
+		console.log(error);
+	});
 });
 
 export default router

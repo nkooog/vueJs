@@ -5,6 +5,7 @@ export const store = reactive ({
 	showLayout : false,
 	alertVisible: false,
 	message: '',
+	user : JSON.parse(sessionStorage.getItem('user')),
 });
 
 export default {

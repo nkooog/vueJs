@@ -28,21 +28,19 @@ import {watch} from "vue";
     },
     created() {
       // 컴포넌트가 실행되면 실행
-      const user = localStorage.getItem('user');
-      if(user) {
-        store.showLayout = true;
-        this.$router.push('/dashBoard');
-      }
     },
     mounted() {
-    },       // tempalte에 정의 된 html 코드가 랜더링 된 후 실행
+      // tempalte에 정의 된 html 코드가 랜더링 된 후 실행
+    },
     unmounted() {
-    },     // unmount가 완료된 후 실행
+      // unmount가 완료된 후 실행
+    },
     methods : {
+      // 컴포넌트 내에서 사용할 메서드명 정의
       close() {
         store.alertVisible = false;
       }
-    },       // 컴포넌트 내에서 사용할 메서드명 정의
+    },
   }
 </script>
 

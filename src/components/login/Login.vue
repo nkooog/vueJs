@@ -26,7 +26,8 @@
                     <div class="col-12">
                       <label for="tenantId" class="form-label">고객사</label>
                       <div class="input-group has-validation">
-                        <input type="text" name="tenantId" class="form-control" id="tenantId" required>
+                        <input type="text" name="tenantId" class="form-control" id="tenantId" v-model="tenantId" required>
+                        <input type="hidden" name="mlingCd" class="form-control" id="mlingCd" :value="mlingCd">
                         <div class="invalid-feedback">고객사를 입력해주세요.</div>
                       </div>
                     </div>
@@ -34,14 +35,14 @@
                     <div class="col-12">
                       <label for="usrId" class="form-label">아이디</label>
                       <div class="input-group has-validation">
-                        <input type="text" name="usrId" class="form-control" id="usrId" required>
+                        <input type="text" name="usrId" class="form-control" id="usrId" v-model="usrId" required>
                         <div class="invalid-feedback">아이디를 입력해주세요.</div>
                       </div>
                     </div>
 
                     <div class="col-12">
                       <label for="scrtNo" class="form-label">비밀번호</label>
-                      <input type="password" name="scrtNo" class="form-control" id="scrtNo" required>
+                      <input type="password" name="scrtNo" class="form-control" id="scrtNo" v-model="scrtNo" required>
                       <div class="invalid-feedback">비밀번호를 입력해주세요.</div>
                     </div>
 
@@ -87,34 +88,52 @@ export default {
   components : {},    // 다른 컴포넌트 사용 시  컴포넌트를 import하고, 배열로 저장
   data() {            // html과 자바스크립에서 사용할 데이터 변수 선언
     return {
-      sampleData : '',
-      message : ''
+      mlingCd : '',
+      tenantId : '',
+      usrId : '',
+      scrtNo : '',
     };
+  },
+  mounted() {
   },
   methods : {
     validateForm() {
       const form = document.forms['sendFrom'];
-      form.checkValidity() ? this.login() : form.classList.add('was-validated');
+      form.checkValidity() ? this.getTenantLang() : form.classList.add('was-validated');
+    },
+    getTenantLang() {
+
+      const params = {
+        tenantId : this.tenantId
+      };
+
+      axios.post('/bcs/lgin/LGIN000SEL03', params).then((response) => {
+        this.mlingCd = JSON.parse(response.data.result).mlingCd;
+        this.login();
+      }).catch((error) => {
+        console.log(error);
+      });
     },
     login() {
 
-      const form = document.querySelector('form');
-      const params = this.serializeForm(form);
+      const params = {
+          tenantId : this.tenantId
+        , usrId    : this.usrId
+        , scrtNo   : this.scrtNo
+        , mlingCd  : this.mlingCd
+      }
 
-      axios.post('/bcs/lgin/LGIN000SEL01', params).then((res) => {
-        this.message = res.data.msg;
+      axios.post('/bcs/lgin/LGIN000SEL01', params).then((response) => {
+        this.message = response.data.msg;
 
         store.alertVisible = true;
         store.message = this.message;
 
-        const user = {
-          user : 'test'
-        }
-
-        localStorage.setItem('user', JSON.stringify(user))
-
-        if(res.data.result == 0) {
+        if(response.data.result == 0) {
           store.showLayout = true;
+
+          // 사용자 정보
+          sessionStorage.setItem('user', JSON.stringify(response.data.user));
           this.$router.push('/dashBoard');
         }
 
@@ -122,15 +141,6 @@ export default {
         console.log(error);
       });
     },
-    serializeForm(formElement) {
-      const formData = new FormData(formElement);
-      const params = {};
-      for (const [key, value] of formData.entries()) {
-        params[key] = value;
-      }
-
-      return params;
-    }
   },       // 컴포넌트 내에서 사용할 메서드명 정의
 }
 </script>

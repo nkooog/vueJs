@@ -34,7 +34,9 @@ import axios from "axios";
 
 export default {
   name : '',    // 컴포넌트 이름
-  components : {},    // 다른 컴포넌트 사용 시  컴포넌트를 import하고, 배열로 저장
+  components : {
+
+  },    // 다른 컴포넌트 사용 시  컴포넌트를 import하고, 배열로 저장
   data() {            // html과 자바스크립에서 사용할 데이터 변수 선언
     return {};
   },
